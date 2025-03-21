@@ -1,0 +1,6 @@
+selenium==4.29.0
+requests>=2.31
+pillow==10.0.1
+jupyterlab-server==2.27.3
+ttkbootstrap==1.10.1
+# Other dependencies can be listed here as needed

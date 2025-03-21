@@ -19,7 +19,7 @@ This project aims to detect and classify patterns in colloidal dispersions using
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/colloid-pattern-detection.git
+   git clone https://github.com/tranvanphuchuy/Data-mining-project
 2. Navigate to the project directory:
 cd colloid-pattern-detection
 3. Install required Python libraries:
