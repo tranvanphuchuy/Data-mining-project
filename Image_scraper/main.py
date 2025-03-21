@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Jul 12 11:02:06 2020
-
-@author: OHyic
-
-"""
 #Import libraries
 import os
 import concurrent.futures
