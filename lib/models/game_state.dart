@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 enum FloorState {
   locked,
@@ -21,6 +22,8 @@ class GameState extends ChangeNotifier {
   int _helpers = 0;
   int _correctAnswers = 0;
   bool _showCongrats = false;
+  int _health = 10;
+  bool _showRules = false;
 
   int get currentFloor => _currentFloor;
   Map<int, FloorState> get floorStates => _floorStates;
@@ -28,6 +31,15 @@ class GameState extends ChangeNotifier {
   int get helpers => _helpers;
   int get correctAnswers => _correctAnswers;
   bool get showCongrats => _showCongrats;
+  int get health => _health;
+  bool get showRules => _showRules;
+
+  void setCurrentFloor(int floor) {
+    if (floor >= 1 && floor <= 3) {
+      _currentFloor = floor;
+      notifyListeners();
+    }
+  }
 
   void unlockSection(int floor, int section) {
     if (_unlockedSections[floor] != null && section < _unlockedSections[floor]!.length) {
@@ -48,6 +60,18 @@ class GameState extends ChangeNotifier {
       _helpers--;
       notifyListeners();
     }
+  }
+
+  void loseHealth() {
+    if (_health > 0) {
+      _health--;
+      notifyListeners();
+    }
+  }
+
+  void toggleRules() {
+    _showRules = !_showRules;
+    notifyListeners();
   }
 
   bool isSectionUnlocked(int floor, int section) {

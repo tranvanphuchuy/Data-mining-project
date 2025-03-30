@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../models/game_state.dart';
 import '../widgets/section_card.dart';
 import '../widgets/question_bottom_sheet.dart';
+import '../widgets/health_display.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({super.key});
@@ -97,7 +98,11 @@ class GameScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('LSU PFT Scavenger Hunt'),
-        backgroundColor: const Color(0xFF461D7C), // LSU Purple
+        backgroundColor: const Color(0xFF461D7C),
+        actions: const [
+          HealthDisplay(),
+          SizedBox(width: 8),
+        ],
       ),
       body: Consumer<GameState>(
         builder: (context, gameState, child) {
@@ -239,6 +244,48 @@ class GameScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+            ],
+          );
+        },
+      ),
+      bottomNavigationBar: Consumer<GameState>(
+        builder: (context, gameState, child) {
+          return BottomNavigationBar(
+            currentIndex: gameState.currentFloor - 1,
+            onTap: (index) {
+              final targetFloor = index + 1;
+              // Only allow navigation to unlocked floors
+              if (targetFloor == 1 || 
+                  (targetFloor > 1 && gameState.getFloorState(targetFloor - 1) == FloorState.unlocked)) {
+                gameState.setCurrentFloor(targetFloor);
+              }
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.looks_one),
+                label: 'Floor 1',
+                backgroundColor: const Color(0xFF461D7C),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.looks_two,
+                  color: gameState.getFloorState(1) == FloorState.unlocked 
+                      ? Colors.white 
+                      : Colors.grey,
+                ),
+                label: 'Floor 2',
+                backgroundColor: const Color(0xFF461D7C),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.looks_3,
+                  color: gameState.getFloorState(2) == FloorState.unlocked 
+                      ? Colors.white 
+                      : Colors.grey,
+                ),
+                label: 'Floor 3',
+                backgroundColor: const Color(0xFF461D7C),
               ),
             ],
           );

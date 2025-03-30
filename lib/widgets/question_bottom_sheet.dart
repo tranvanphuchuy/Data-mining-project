@@ -70,12 +70,15 @@ class _QuestionBottomSheetState extends State<QuestionBottomSheet> with SingleTi
         context.read<GameState>().unlockSection(widget.floor, widget.section);
         Navigator.pop(context);
       });
+    } else {
+      context.read<GameState>().loseHealth();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final question = Questions.getQuestion(widget.floor, widget.section);
+    final gameState = context.watch<GameState>();
 
     return AnimatedBuilder(
       animation: _animation,
@@ -114,13 +117,13 @@ class _QuestionBottomSheetState extends State<QuestionBottomSheet> with SingleTi
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      if (!isAnswerSubmitted && context.watch<GameState>().helpers > 0 && !usedHelper)
+                      if (!isAnswerSubmitted && gameState.helpers > 0 && !usedHelper)
                         IconButton(
                           icon: const Icon(Icons.lightbulb, color: Colors.white),
                           onPressed: () {
                             setState(() {
                               usedHelper = true;
-                              context.read<GameState>().useHelper();
+                              gameState.useHelper();
                             });
                           },
                         ),
