@@ -1,29 +1,16 @@
-# Colloid Pattern Detection Project
+# scavengerhunt
 
-## Project Overview
-This project aims to detect and classify patterns in colloidal dispersions using image processing and machine learning techniques. It automates the identification of various colloid shapes, such as squares, rectangles, and triangles, and possibly other shapes based on visual data.
-
-## Features
-- **Image Preprocessing**: Convert images to grayscale, apply Gaussian blurring, and perform adaptive thresholding to enhance image features.
-- **Feature Extraction**: Implement edge detection and morphological transformations to prepare data for model training.
-- **Pattern Recognition**: Use machine learning algorithms to classify the shapes of colloids.
+A new Flutter project.
 
 ## Getting Started
 
-### Prerequisites
-- Python 3.8 or higher
-- OpenCV
-- NumPy
-- Optional: TensorFlow or PyTorch for more advanced machine learning models
+This project is a starting point for a Flutter application.
 
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/tranvanphuchuy/Data-mining-project
-2. Navigate to the project directory:
-cd colloid-pattern-detection
-3. Install required Python libraries:
-pip install -r requirements.txt
+A few resources to get you started if this is your first Flutter project:
 
-4. Running the Project
-python src/preprocessing.py
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

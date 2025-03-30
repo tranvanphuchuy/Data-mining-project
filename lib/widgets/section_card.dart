@@ -4,89 +4,79 @@ import '../models/game_state.dart';
 class SectionCard extends StatelessWidget {
   final int sectionNumber;
   final bool isUnlocked;
-  final VoidCallback onTap;
   final FloorState floorState;
+  final VoidCallback onTap;
 
   const SectionCard({
     super.key,
     required this.sectionNumber,
     required this.isUnlocked,
-    required this.onTap,
     required this.floorState,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 500),
-      child: Card(
-        elevation: 4,
-        child: InkWell(
-          onTap: floorState == FloorState.locked
-              ? onTap
-              : (isUnlocked ? onTap : null),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              image: DecorationImage(
-                image: AssetImage(
-                  floorState == FloorState.locked
-                      ? 'assets/images/floors/locked_floor.png'
-                      : isUnlocked
-                          ? 'assets/images/sections/floor1/unlocked_section$sectionNumber.png'
-                          : 'assets/images/sections/floor1/locked_section$sectionNumber.png',
-                ),
+    String imagePath;
+    if (floorState == FloorState.locked) {
+      imagePath = 'assets/floors/locked_floor${sectionNumber}.png';
+    } else {
+      imagePath = isUnlocked
+          ? 'assets/sections/floor${sectionNumber}/unlocked_section${sectionNumber}.png'
+          : 'assets/sections/floor${sectionNumber}/locked_section${sectionNumber}.png';
+    }
+
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.asset(
+                imagePath,
                 fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                  floorState == FloorState.locked
-                      ? Colors.transparent
-                      : (isUnlocked ? Colors.transparent : Colors.grey.withOpacity(0.5)),
-                  BlendMode.dstATop,
-                ),
               ),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black.withOpacity(0.7),
-                  ],
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          floorState == FloorState.locked
-                              ? 'Floor'
-                              : 'Section $sectionNumber',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        if (floorState != FloorState.locked)
-                          Icon(
-                            isUnlocked ? Icons.lock_open : Icons.lock,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                      ],
-                    ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.7),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              Positioned(
+                bottom: 20,
+                left: 20,
+                right: 20,
+                child: Text(
+                  floorState == FloorState.locked
+                      ? 'Floor $sectionNumber'
+                      : 'Section $sectionNumber',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

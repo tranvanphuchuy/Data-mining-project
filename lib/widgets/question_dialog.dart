@@ -24,8 +24,9 @@ class _QuestionDialogState extends State<QuestionDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final question = Questions.getQuestion(widget.floor, widget.section);
-    if (question == null) return const SizedBox.shrink();
+    final gameState = context.watch<GameState>();
+    final questionsAnswered = gameState.getQuestionsAnswered(widget.floor, widget.section);
+    final question = Questions.getQuestion(widget.floor, widget.section, questionsAnswered);
 
     return AlertDialog(
       title: Text('Section ${widget.section + 1} Question'),

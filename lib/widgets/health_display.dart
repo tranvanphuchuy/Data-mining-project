@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/game_state.dart';
+import 'dart:math';
 
 class HealthDisplay extends StatelessWidget {
   const HealthDisplay({super.key});
@@ -10,28 +11,26 @@ class HealthDisplay extends StatelessWidget {
     return Consumer<GameState>(
       builder: (context, gameState, child) {
         return Row(
-          children: [
-            // Health Hearts
-            Row(
-              children: List.generate(10, (index) {
-                return AnimatedSwitcher(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(10, (index) {
+            final isActive = index < gameState.health;
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              child: AnimatedScale(
+                duration: const Duration(milliseconds: 300),
+                scale: isActive ? 1.0 : 0.8,
+                child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 300),
+                  opacity: isActive ? 1.0 : 0.5,
                   child: Icon(
-                    index < gameState.health ? Icons.favorite : Icons.favorite_border,
-                    color: index < gameState.health ? Colors.red : Colors.grey,
-                    key: ValueKey('heart_$index'),
+                    Icons.favorite,
+                    color: isActive ? Colors.red : Colors.grey,
+                    size: 20,
                   ),
-                );
-              }),
-            ),
-            const SizedBox(width: 16),
-            // Rules Button
-            IconButton(
-              icon: const Icon(Icons.help_outline),
-              color: Colors.white,
-              onPressed: () => _showRulesDialog(context),
-            ),
-          ],
+                ),
+              ),
+            );
+          }),
         );
       },
     );
